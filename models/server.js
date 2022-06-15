@@ -1,5 +1,6 @@
+//Importaciones
 const express = require("express");
-
+const cors = require('cors');
 
 // const port = process.env.PORT;
 
@@ -18,14 +19,47 @@ class Server {
 
 
   middlewares(){
+
+    //CORS
+      this.app.use( cors() );
+
     //directorio publico
-    this.app.use(express.static('public')); //
+    this.app.use(express.static('public')); 
   }
 
   routes() {
+
+    //endpoint GET en EXPRESS (Obtener)
     this.app.get("/api", (req, res) => {
-      res.send("Hello World");
+      res.status(201).json({
+        ok: true,
+        msg: 'get API'
+      });
     });
+
+    //endpoint PUT en EXPRESS (Actualizar)
+    this.app.put("/api", (req, res) => {
+        res.status(400).json({
+          ok: true,
+          msg: 'put API'
+        });
+      });
+
+      //endpoint POST en EXPRESS (Crear)
+    this.app.post("/api", (req, res) => {
+        res.status(201).json({
+          ok: true,
+          msg: 'post API'
+        });
+      });
+
+      //endpoint DELETE en EXPRESS (Eliminar)
+    this.app.delete("/api", (req, res) => {
+        res.status(201).json({
+          ok: true,
+          msg: 'delete API'
+        });
+      });
   }
 
   listen() {
