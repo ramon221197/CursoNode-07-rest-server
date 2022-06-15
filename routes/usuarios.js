@@ -16,7 +16,7 @@ const router = Router();
 router.get("/", usuariosGet);
 
 //endpoint PUT en EXPRESS (Actualizar)
-router.put("/", usuariosPut);
+router.put("/:id", usuariosPut);
 
 //endpoint POST en EXPRESS (Crear)
 router.post("/", usuariosPost);
