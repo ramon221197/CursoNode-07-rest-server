@@ -8,6 +8,7 @@ class Server {
   constructor() {
     this.app = express();//uso se EXPRESS
     this.port = process.env.PORT;//variable de entorno de PORT
+    this.usuariosPath = '/api/usuarios'; //path para los usuarios
 
 
     // Middlewares
@@ -29,37 +30,9 @@ class Server {
 
   routes() {
 
-    //endpoint GET en EXPRESS (Obtener)
-    this.app.get("/api", (req, res) => {
-      res.status(201).json({
-        ok: true,
-        msg: 'get API'
-      });
-    });
+    //ponemos el url para las rutas, y el path sonde se encuentran esas rutas
+    this.app.use(this.usuariosPath, require('../routes/usuarios'));
 
-    //endpoint PUT en EXPRESS (Actualizar)
-    this.app.put("/api", (req, res) => {
-        res.status(400).json({
-          ok: true,
-          msg: 'put API'
-        });
-      });
-
-      //endpoint POST en EXPRESS (Crear)
-    this.app.post("/api", (req, res) => {
-        res.status(201).json({
-          ok: true,
-          msg: 'post API'
-        });
-      });
-
-      //endpoint DELETE en EXPRESS (Eliminar)
-    this.app.delete("/api", (req, res) => {
-        res.status(201).json({
-          ok: true,
-          msg: 'delete API'
-        });
-      });
   }
 
   listen() {
