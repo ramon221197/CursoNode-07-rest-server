@@ -18,9 +18,16 @@ const usuariosPut = (req, res = response) => {
 };
 
 const usuariosPost = (req, res = response) => {
+
+    //Obtener informacion
+    const {nombre, edad} = req.body;
+
+
     res.status(201).json({
       ok: true,
-      msg: 'post API - Controlador'
+      msg: 'post API - Controlador',
+      nombre,
+      edad
     });
   }
 
