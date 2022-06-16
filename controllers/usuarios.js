@@ -1,6 +1,7 @@
 //IMPORTACIONES
 const { response, request } = require("express"); //Para tener los metodos y propiedades de una RESPONSE (status, json, etc)
 
+const Usuario = require('../models/usuario');//importacion de la tabla usuario
 
 
 const usuariosGet = (req = request, res = response) => {
@@ -30,17 +31,19 @@ const usuariosPut = (req, res = response) => {
   });
 };
 
-const usuariosPost = (req, res = response) => {
+const usuariosPost = async (req, res = response) => {
 
     //Obtener informacion
-    const {nombre, edad} = req.body;
+    const body= req.body;
+
+    const usuario = new Usuario( body ); //intancia para crear un usuario
+    await usuario.save(); //para guardar el usuario con Mongoose en MongoDB
 
 
     res.status(201).json({
       ok: true,
       msg: 'post API - Controlador',
-      nombre,
-      edad
+      usuario
     });
   }
 
