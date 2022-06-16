@@ -40,10 +40,14 @@ class Server {
     this.app.use(express.static("public"));
   }
 
+
+  //Para rutas de la aplicacion
   routes() {
-    //ponemos el url para las rutas, y el path sonde se encuentran esas rutas
+
+    //ponemos el url para las rutas, y el path donde se encuentran esas rutas
     this.app.use(this.usuariosPath, require("../routes/usuarios"));
   }
+
 
   listen() {
     //Uso de EXPRESS

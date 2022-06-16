@@ -1,5 +1,6 @@
 //IMPORTACIONES
 const { response, request } = require("express"); //Para tener los metodos y propiedades de una RESPONSE (status, json, etc)
+const bcrypt = require('bcryptjs'); //Para encryptar las contraseñas
 
 const Usuario = require('../models/usuario');//importacion de la tabla usuario
 
@@ -34,10 +35,20 @@ const usuariosPut = (req, res = response) => {
 const usuariosPost = async (req, res = response) => {
 
     //Obtener informacion
-    const body= req.body;
+    const {nombre, correo, password, rol}= req.body;
 
-    const usuario = new Usuario( body ); //intancia para crear un usuario
-    await usuario.save(); //para guardar el usuario con Mongoose en MongoDB
+    //Proceso para crear usuarios
+    const usuario = new Usuario( {nombre, correo, password, rol} ); //intancia para crear un usuario
+    
+    //verificar si el correo ya existe en la BD
+
+
+    //Encriptar el password (Hashear la contraseña)
+    const salt = bcrypt.genSaltSync(10); //salt es el numero de vueltas que se hace para la encryptacion por defecto esta en 10
+    usuario.password = bcrypt.hashSync(password, salt); // "usuario.password" es el campo que se va encriptar, "hashSync" es el hash de una sola via y me pide el campo que se encripta y el numero de salt
+
+    //guardar el usuario con Mongoose en MongoDB
+    await usuario.save(); 
 
 
     res.status(201).json({
