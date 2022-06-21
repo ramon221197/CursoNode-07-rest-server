@@ -1,5 +1,6 @@
 //Importacion de los paquetes
 const { Router } = require("express");
+const { check } = require("express-validator");
 const {
   usuariosGet,
   usuariosPut,
@@ -19,7 +20,9 @@ router.get("/", usuariosGet);
 router.put("/:id", usuariosPut);
 
 //endpoint POST en EXPRESS (Crear)
-router.post("/", usuariosPost);
+router.post("/", [
+  check('correo', 'El correo no es valido').isEmail(),
+] ,usuariosPost); 
 
 //endpoint DELETE en EXPRESS (Eliminar)
 router.delete("/", usuariosDelete);
