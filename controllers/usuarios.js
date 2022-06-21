@@ -57,6 +57,7 @@ const usuariosPost = async (req, res = response) => {
     await usuario.save(); 
 
 
+    //Para imprimir el objeto que se va insertar 
     res.status(201).json({
       ok: true,
       msg: 'post API - Controlador',
