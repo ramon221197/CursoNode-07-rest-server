@@ -3,7 +3,6 @@ const { response, request } = require("express"); //Para tener los metodos y pro
 const bcrypt = require('bcryptjs'); //Para encryptar las contraseñas
 
 const Usuario = require('../models/usuario');//importacion de la tabla usuario
-const {validationResult} = require('express-validator');
 
 
 const usuariosGet = (req = request, res = response) => {
@@ -36,10 +35,6 @@ const usuariosPut = (req, res = response) => {
 const usuariosPost = async (req, res = response) => {
 
     //Validaciones de Express-validators
-    const errors = validationResult(req);
-    if ( !errors.isEmpty() ) { //si existen errores, retorna un status de error con errores encontrados por express-validators
-      return res.status(400).json(errors);
-    }
 
     //Obtener informacion
     const {nombre, correo, password, rol}= req.body;
