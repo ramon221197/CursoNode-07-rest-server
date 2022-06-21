@@ -8,6 +8,7 @@ const {
   usuariosDelete,
 } = require("../controllers/usuarios");
 const validarCampos = require("../middlewares/validar-campos");
+const Role = require('../models/role');
 
 
 
@@ -25,7 +26,14 @@ router.post("/", [
   check('nombre', 'El nombre es requerido').not().isEmpty(),//no debe estar vacio
   check('correo', 'El correo es requerido').not().isEmpty(),//no debe estar vacio
   check('correo', 'El correo no es valido').isEmail(),
-  check('rol', 'No es un rol valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),//isIn(), para decir si se encuentra dentro de un arreglo
+  // check('rol', 'No es un rol valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),//isIn(), para decir si se encuentra dentro de un arreglo
+  //validar rol, con datos de la BD
+  check('rol').custom( async( rol = '' ) => {
+    const existeRol = await Role.findOne({ rol });//esta linea es para buscar el rol que se esta mandando como argumento en la BD 
+    if ( !existeRol ) {//si no esxiste el rol, entonces mandamos el error
+      throw new Error(`el rol ${rol} no esta registrado en la BD`)
+    }
+  } ),
   check('password', 'El password es requerido y mayor a 6 letras').not().isEmpty().isLength({ min: 6, max: 20 } ),//no debe estar vacio y mayor a 6 letras
   validarCampos //Para indicar que haga las validaciones del middleware
 ] ,usuariosPost); 
