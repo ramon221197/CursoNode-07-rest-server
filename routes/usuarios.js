@@ -7,7 +7,7 @@ const {
   usuariosPost,
   usuariosDelete,
 } = require("../controllers/usuarios");
-const { esRoleValido } = require("../helpers/db-validators");
+const { esRoleValido, emailExiste } = require("../helpers/db-validators");
 const validarCampos = require("../middlewares/validar-campos");
 
 
@@ -26,6 +26,7 @@ router.post("/", [
   check('nombre', 'El nombre es requerido').not().isEmpty(),//no debe estar vacio
   check('correo', 'El correo es requerido').not().isEmpty(),//no debe estar vacio
   check('correo', 'El correo no es valido').isEmail(),
+  check('correo').custom( emailExiste ), //verificar email repetidos
   // check('rol', 'No es un rol valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),//isIn(), para decir si se encuentra dentro de un arreglo
   //validar rol, con datos de la BD
   check('rol').custom( esRoleValido ),
