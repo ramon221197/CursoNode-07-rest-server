@@ -24,7 +24,7 @@ const usuariosPut = async(req, res = response) => {
 
   //extraccion de password y google por que no ocupo que se actualicen
   const { id } = req.params;
-  const {password, google, correo, ...resto} = req.body;
+  const { _id, password, google, correo, ...resto} = req.body;
 
   //TDO validar vs base de datos
   if( password ){ //si existe el password
@@ -35,10 +35,10 @@ const usuariosPut = async(req, res = response) => {
   // findByIdAndUpdate para buscar un objeto por id y actualizar
   const usuario = await Usuario.findByIdAndUpdate( id, resto ); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
   
-  res.status(400).json({
+  res.json({
     ok: true,
-    id,
     msg: "put API- Controlador",
+    usuario
   });
 };
 
