@@ -5,20 +5,18 @@ const bcrypt = require('bcryptjs'); //Para encryptar las contraseñas
 const Usuario = require('../models/usuario');//importacion de la tabla usuario
 
 
-const usuariosGet = (req = request, res = response) => {
+const usuariosGet = async(req = request, res = response) => {
 
-  const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;  
+  // const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;  
+  const {limite = 5, desde = 0} = req.query;
+  const usuarios = await Usuario.find()
+    .skip( Number(desde) ) 
+    .limit( Number(limite) );
 
-  res.status(201).json({
-    ok: true,
-    msg: "get API - Controlador",
-    q,
-    nombre,
-    apikey,
-    page,
-    limit
+  res.json({
+    usuarios
   });
-};
+}
 
 const usuariosPut = async(req, res = response) => {
 
@@ -37,10 +35,9 @@ const usuariosPut = async(req, res = response) => {
   
   res.json({
     ok: true,
-    msg: "put API- Controlador",
     usuario
   });
-};
+}
 
 const usuariosPost = async (req, res = response) => {
 
@@ -80,4 +77,4 @@ module.exports = {
   usuariosPut,
   usuariosPost,
   usuariosDelete
-};
+}
