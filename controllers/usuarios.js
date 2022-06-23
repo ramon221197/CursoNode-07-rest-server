@@ -9,11 +9,24 @@ const usuariosGet = async(req = request, res = response) => {
 
   // const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;  
   const {limite = 5, desde = 0} = req.query;
-  const usuarios = await Usuario.find()
+
+  // const usuarios = await Usuario.find({ estado: true }) // {estado:true} para que regrese todos los usuarios con estado = true
+  //   .skip( Number(desde) ) 
+  //   .limit( Number(limite) );
+
+  // const total = await Usuario.countDocuments({ estado: true }); //countDocuments para el todal de un objeto o modelo
+
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments({ estado: true }), //countDocuments para el todal de un objeto o modelo
+    
+    Usuario.find({ estado: true }) // {estado:true} para que regrese todos los usuarios con estado = true
     .skip( Number(desde) ) 
-    .limit( Number(limite) );
+    .limit( Number(limite) )
+  ])//Promise.all() es para ejecutar todas las promesas que se tengan dentro del arreglo all([])
+
 
   res.json({
+    total,
     usuarios
   });
 }
