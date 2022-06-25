@@ -42,7 +42,11 @@ router.post("/", [
 
 
 //endpoint DELETE en EXPRESS (Eliminar)
-router.delete("/", usuariosDelete);
+router.delete("/:id", [
+  check('id', 'No es un ID valido').isMongoId(),//el ID que se pone en la ruta debe ser un ID de mongo
+  check('id').custom( existeUsuarioPorID ), //checar que exista en la base de datos
+  validarCampos //Para que no continue ejecutando el controlador si existe error en los middlewares
+], usuariosDelete);
 
 
 

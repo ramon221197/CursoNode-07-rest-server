@@ -78,10 +78,20 @@ const usuariosPost = async (req, res = response) => {
     });
   }
 
-const usuariosDelete = (req, res = response) => {
-    res.status(201).json({
-      ok: true,
-      msg: 'delete API - Controlador'
+const usuariosDelete = async(req, res = response) => {
+
+  const { id } = req.params;
+
+  //Eliminacion fisica
+  //const usuario = await Usuario.findByIdAndDelete( id );
+
+  //Eliminacion logica
+  const usuario =  await Usuario.findByIdAndUpdate( id, {estado: false}); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
+
+
+  res.status(201).json({
+      usuario,
+      msg: `Usuario eliminado correctamente`
     });
   }
 
