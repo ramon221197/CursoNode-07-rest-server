@@ -9,7 +9,9 @@ class Server {
   constructor() {
     this.app = express(); //uso se EXPRESS
     this.port = process.env.PORT; //variable de entorno de PORT
+
     this.usuariosPath = "/api/usuarios"; //path para los usuarios
+    this.authPath = "/api/auth"; //path para auetnticación
 
     //Conectar a base de datos
     this.conectarDB();
@@ -45,13 +47,14 @@ class Server {
   routes() {
 
     //ponemos el url para las rutas, y el path donde se encuentran esas rutas
+    this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.usuariosPath, require("../routes/usuarios"));
   }
 
 
   listen() {
+    
     //Uso de EXPRESS
-
     this.app.listen(this.port, () => {
       console.log(`\nServidor corriendo en el puerto ${this.port}...`);
     });

@@ -38,7 +38,8 @@ const UsuarioSchema = Schema({
 //Para sobre escribir el metodo json (la funcion para imprimir lo que se desea insertar)
 UsuarioSchema.methods.toJSON = function(){
     //... es el operador rest, para sacar __v y password del objeto
-    const { __v, password, ...usuario } = this.toObject(); //los ... es para almacenar el resto de las propiedades del objeto en la variable usuario ()...usuario)
+    const { __v, password, _id , ...usuario } = this.toObject(); //los ... es para almacenar el resto de las propiedades del objeto en la variable usuario ()...usuario)
+    usuario.uid = _id; //Para cambiar _id por uid en las peticiones
     return usuario;//retorna usuario sin el valor de password y __v
 }
 
