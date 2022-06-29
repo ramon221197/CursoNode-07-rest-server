@@ -10,7 +10,7 @@ const {
 const { esRoleValido, emailExiste, existeUsuarioPorID } = require("../helpers/db-validators");
 const validarCampos = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-JWT");
-const { esAdminRole } = require("../middlewares/validar-roles");
+const { esAdminRole, tieneRole } = require("../middlewares/validar-roles");
 
 
 
@@ -46,7 +46,8 @@ router.post("/", [
 //endpoint DELETE en EXPRESS (Eliminar)
 router.delete("/:id", [
   validarJWT,
-  esAdminRole,
+  // esAdminRole,
+  tieneRole('ADMIN_ROLE', 'VENTAS_ROLE'),
   check('id', 'No es un ID valido').isMongoId(),//el ID que se pone en la ruta debe ser un ID de mongo
   check('id').custom( existeUsuarioPorID ), //checar que exista en la base de datos
   validarCampos //Para que no continue ejecutando el controlador si existe error en los middlewares
