@@ -78,9 +78,10 @@ const usuariosPost = async (req, res = response) => {
     });
   }
 
-const usuariosDelete = async(req, res = response) => {
+const usuariosDelete = async(req = request, res = response) => {
 
   const { id } = req.params;
+
 
   // const uid = req.uid;
 
@@ -88,7 +89,7 @@ const usuariosDelete = async(req, res = response) => {
   //const usuario = await Usuario.findByIdAndDelete( id );
 
   //Eliminacion logica
-  const usuario =  await Usuario.findByIdAndUpdate( id, {estado: false}); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
+  const usuario =  await Usuario.findByIdAndUpdate( id, { estado: false}); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
 
   //para ver el usuario autenticado
   // const usuarioAutenticado =  req.usuario;
