@@ -90,11 +90,13 @@ const usuariosDelete = async(req, res = response) => {
   //Eliminacion logica
   const usuario =  await Usuario.findByIdAndUpdate( id, {estado: false}); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
 
+  //para ver el usuario autenticado
+  // const usuarioAutenticado =  req.usuario;
 
   res.status(201).json({
       usuario,
-      // uid,
       msg: `Usuario eliminado correctamente`
+      // uid,
     });
   }
 
