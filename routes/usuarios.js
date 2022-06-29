@@ -8,10 +8,9 @@ const {
   usuariosDelete,
 } = require("../controllers/usuarios");
 const { esRoleValido, emailExiste, existeUsuarioPorID } = require("../helpers/db-validators");
-const validarCampos = require("../middlewares/validar-campos");
-const { validarJWT } = require("../middlewares/validar-JWT");
-const { esAdminRole, tieneRole } = require("../middlewares/validar-roles");
 
+const { validarJWT, tieneRole} = require('../middlewares');
+const validarCampos = require("../middlewares/validar-campos");
 
 
 //PARA CREAR LAS RUTAS
