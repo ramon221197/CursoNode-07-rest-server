@@ -26,9 +26,17 @@
       data-logo_alignment="left">
     </div>
 
+    <br>
+
+    <button id="google_signout"> Sign-out </button>
+
+
+
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <script>
+
+        //Funcion para manejar las credenciales (sigIn)
         function handleCredentialResponse(response) {
            
             //google token
@@ -46,10 +54,29 @@
                 .then( resp => resp.json() )
                 .then( resp => {
                   console.log(resp);
+                  localStorage.setItem('email', resp.usuario.correo);
                 })
                 .catch(console.warn);
-
         }
+
+        //funcion para hacer logOut
+        const button = document.getElementById('google_signout');
+        button.onclick = () =>{
+
+          console.log(google.accounts.id);
+          google.accounts.id.disableAutoSelect();
+
+          google.accounts.id.revoke( localStorage.getItem('email'), done => {
+            localStorage.clear(); //limpieza del localStorage para borrar el correo con el que se logueo
+            location.reload(); //para recargar la pagina y vaciar cualquier cosa que se tenga en el estado de la aplicacion
+          } )
+          
+        
+        }
+
+        
+
+        
       </script>
 
   </body>
