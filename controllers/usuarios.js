@@ -31,27 +31,6 @@ const usuariosGet = async(req = request, res = response) => {
   });
 }
 
-const usuariosPut = async(req, res = response) => {
-
-  //extraccion de password y google por que no ocupo que se actualicen
-  const { id } = req.params;
-  const { _id, password, google, correo, ...resto} = req.body;
-
-  //TDO validar vs base de datos
-  if( password ){ //si existe el password
-    //Encripta la contraseña
-    const salt = bcrypt.genSaltSync(10); //salt es el numero de vueltas que se hace para la encryptacion por defecto esta en 10
-    resto.password = bcrypt.hashSync(password, salt); // "usuario.password" es el campo que se va encriptar, "hashSync" es el hash de una sola via y me pide el campo que se encripta y el numero de salt
-  }
-  // findByIdAndUpdate para buscar un objeto por id y actualizar
-  const usuario = await Usuario.findByIdAndUpdate( id, resto ); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
-  
-  res.json({
-    ok: true,
-    usuario
-  });
-}
-
 const usuariosPost = async (req, res = response) => {
 
     //Obtener informacion
@@ -76,7 +55,28 @@ const usuariosPost = async (req, res = response) => {
       msg: 'post API - Controlador',
       usuario
     });
-  }
+}
+
+  const usuariosPut = async(req, res = response) => {
+
+    //extraccion de password y google por que no ocupo que se actualicen
+    const { id } = req.params;
+    const { _id, password, google, correo, ...resto} = req.body;
+  
+    //TDO validar vs base de datos
+    if( password ){ //si existe el password
+      //Encripta la contraseña
+      const salt = bcrypt.genSaltSync(10); //salt es el numero de vueltas que se hace para la encryptacion por defecto esta en 10
+      resto.password = bcrypt.hashSync(password, salt); // "usuario.password" es el campo que se va encriptar, "hashSync" es el hash de una sola via y me pide el campo que se encripta y el numero de salt
+    }
+    // findByIdAndUpdate para buscar un objeto por id y actualizar
+    const usuario = await Usuario.findByIdAndUpdate( id, resto ); //el primer agumento es para el id y el segundo argumento es para lo que se va actualizar
+    
+    res.json({
+      ok: true,
+      usuario
+    });
+}
 
 const usuariosDelete = async(req = request, res = response) => {
 
@@ -99,7 +99,7 @@ const usuariosDelete = async(req = request, res = response) => {
       msg: `Usuario eliminado correctamente`
       // uid,
     });
-  }
+}
 
 module.exports = {
   usuariosGet,

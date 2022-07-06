@@ -20,6 +20,15 @@ const CategoriaSchema = Schema({
 
 });
 
+//Para sobre escribir el metodo json (la funcion para imprimir lo que se desea insertar)
+CategoriaSchema.methods.toJSON = function(){
+    //... es el operador rest, para sacar __v y password del objeto
+    const { __v, estado, ...categoria } = this.toObject(); //los ... es para almacenar el resto de las propiedades del objeto en la variable categoria ()...categoria)
+    return categoria;//retorna usuario sin el valor de password y __v
+}
+
+
+
 
 //Utilizamos la funcion "model" de Mongoose para exportar el modelo creado
 module.exports = model('Categoria', CategoriaSchema);

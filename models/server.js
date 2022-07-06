@@ -52,8 +52,8 @@ class Server {
 
     //ponemos el url para las rutas, y el path donde se encuentran esas rutas
     this.app.use(this.paths.auth, require("../routes/auth"));
-    this.app.use(this.paths.usuarios, require("../routes/usuarios"));
     this.app.use(this.paths.categorias, require("../routes/categorias"));
+    this.app.use(this.paths.usuarios, require("../routes/usuarios"));
   }
 
 
