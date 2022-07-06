@@ -10,8 +10,12 @@ class Server {
     this.app = express(); //uso se EXPRESS
     this.port = process.env.PORT; //variable de entorno de PORT
 
-    this.usuariosPath = "/api/usuarios"; //path para los usuarios
-    this.authPath = "/api/auth"; //path para auetnticación
+    this.paths = {
+      auth:         "/api/auth", //path para auetnticación
+      categorias :  "/api/categorias", //path para auetnticación
+      usuarios:     "/api/usuarios", //path para los usuarios
+    }
+    
 
     //Conectar a base de datos
     this.conectarDB();
@@ -47,8 +51,9 @@ class Server {
   routes() {
 
     //ponemos el url para las rutas, y el path donde se encuentran esas rutas
-    this.app.use(this.authPath, require("../routes/auth"));
-    this.app.use(this.usuariosPath, require("../routes/usuarios"));
+    this.app.use(this.paths.auth, require("../routes/auth"));
+    this.app.use(this.paths.usuarios, require("../routes/usuarios"));
+    this.app.use(this.paths.categorias, require("../routes/categorias"));
   }
 
 
