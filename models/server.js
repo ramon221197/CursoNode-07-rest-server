@@ -13,6 +13,7 @@ class Server {
     this.paths = {
       auth:         "/api/auth", //path para auetnticación
       categorias :  "/api/categorias", //path para auetnticación
+      productos:    "/api/productos", //path para los productos
       usuarios:     "/api/usuarios", //path para los usuarios
     }
     
@@ -53,6 +54,7 @@ class Server {
     //ponemos el url para las rutas, y el path donde se encuentran esas rutas
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.categorias, require("../routes/categorias"));
+    this.app.use(this.paths.productos, require("../routes/productos"));
     this.app.use(this.paths.usuarios, require("../routes/usuarios"));
   }
 
