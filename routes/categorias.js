@@ -1,6 +1,8 @@
 //Importacion de los paquetes
 const { Router } = require("express");
 const { check } = require("express-validator");
+const { crearCategoria } = require("../controllers/categorias");
+const { validarJWT } = require("../middlewares");
 
 const validarCampos = require("../middlewares/validar-campos");
 
@@ -24,11 +26,11 @@ router.get('/:id', (req, res) => {
 });
 
 //crear categoria - privado - cualquier pesona con un token valido
-router.post('/', (req, res) => {
-    res.json({
-        msg: 'post'
-    })
-});
+router.post('/', [
+    validarJWT,
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    validarCampos
+] , crearCategoria);
 
 //Actualizar - privado - cualquiera con token valido
 router.put('/:id', (req, res) => {
