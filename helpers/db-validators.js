@@ -1,4 +1,4 @@
-const {Usuario, Categoria, Role} = require("../models");
+const {Usuario, Categoria, Role, Producto} = require("../models");
 
 const esRoleValido = async (rol = "") => {
   const existeRol = await Role.findOne({ rol }); //esta linea es para buscar el rol que se esta mandando como argumento en la BD
@@ -32,9 +32,19 @@ const existeCategoriaPorId = async ( id ) => {
   }
 }
 
+const existeProductoPorId = async ( id ) => {
+
+  //verificar si la categoria existe
+  const existeProducto = await Producto.findById( id ); //findOne va buscar el objeto que tenga el correo que sea igual al que recibo como argumento
+  if ( !existeProducto) {//si el ID NO existe, retorna un error y mensaje de que el Usuario ya esta registrado
+        throw new Error(`El id: ${id} no existe en la BD`);
+  }
+}
+
 module.exports = {
   esRoleValido,
   emailExiste,
   existeUsuarioPorID,
-  existeCategoriaPorId
+  existeCategoriaPorId,
+  existeProductoPorId
 }
